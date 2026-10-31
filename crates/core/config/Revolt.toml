@@ -49,6 +49,7 @@ invite_only = false
 # Email server configuration for verification
 # Defaults to no email verification (host field is empty)
 host = ""
+helo_host = ""
 username = ""
 password = ""
 from_address = "noreply@example.com"

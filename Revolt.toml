@@ -39,6 +39,7 @@ worldwide = "ws://local.revolt.chat:14706"
 host = "localhost"
 username = "smtp"
 password = "smtp"
+helo_host = "localhost"
 from_address = "development@revolt.chat"
 reply_to = "support@revolt.chat"
 port = 14025

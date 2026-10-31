@@ -114,6 +114,7 @@ pub struct ApiSmtp {
     pub host: String,
     pub username: String,
     pub password: String,
+    pub helo_host: String,
     pub from_address: String,
     pub reply_to: Option<String>,
     pub port: Option<i32>,
