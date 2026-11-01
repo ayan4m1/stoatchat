@@ -195,7 +195,7 @@ pub fn create_transport(smtp: &ApiSmtp) -> SmtpTransport {
         relay.hello_name(helo_host);
     } else {
         relay
-    }
+    };
 
     relay
         .credentials(Credentials::new(
