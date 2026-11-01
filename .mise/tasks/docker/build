@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#MISE description="Build the API image locally. Use CARGO_BUILD_JOBS= to lower the job count if this OOMs."
+set -e
+
+IMAGE="registry.stoatinternal.com/stoat/backend-canary"
+TAG=latest
+PLATFORM=linux/amd64
+
+# echo "Building base image for ${PLATFORM}..."
+# docker buildx build --platform "${PLATFORM}" --load \
+#   -t ghcr.io/stoatchat/base:latest -f Dockerfile \
+#   --build-arg CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-10}" .
+
+echo "Building API image for ${PLATFORM}..."
+docker buildx build --platform "${PLATFORM}" --load \
+  -t "${IMAGE}:${TAG}-delta" - < crates/delta/Dockerfile
+
+echo "Building Bonfire image for ${PLATFORM}..."
+docker buildx build --platform "${PLATFORM}" --load \
+  -t "${IMAGE}:${TAG}-bonfire" - < crates/bonfire/Dockerfile
+
+echo "Building Autumn image for ${PLATFORM}..."
+docker buildx build --platform "${PLATFORM}" --load \
+  -t "${IMAGE}:${TAG}-autumn" - < crates/services/autumn/Dockerfile
+
+echo "Building Gifbox image for ${PLATFORM}..."
+docker buildx build --platform "${PLATFORM}" --load \
+  -t "${IMAGE}:${TAG}-gifbox" - < crates/services/gifbox/Dockerfile
+
+echo "Building January image for ${PLATFORM}..."
+docker buildx build --platform "${PLATFORM}" --load \
+  -t "${IMAGE}:${TAG}-january" - < crates/services/january/Dockerfile
+
+echo "Building Crond image for ${PLATFORM}..."
+docker buildx build --platform "${PLATFORM}" --load \
+  -t "${IMAGE}:${TAG}-crond" - < crates/daemons/crond/Dockerfile
+
+echo "Building Pushd image for ${PLATFORM}..."
+docker buildx build --platform "${PLATFORM}" --load \
+  -t "${IMAGE}:${TAG}-pushd" - < crates/daemons/pushd/Dockerfile
+
+echo "Building Voice-ingress image for ${PLATFORM}..."
+docker buildx build --platform "${PLATFORM}" --load \
+  -t "${IMAGE}:${TAG}-voice-ingress" - < crates/daemons/voice-ingress/Dockerfile
