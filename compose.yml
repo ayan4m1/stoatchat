@@ -223,6 +223,6 @@ services:
   web:
     # for-web v0.15.3
     #image: ghcr.io/stoatchat/for-web:4017c18
-    build: .
+    build: ../for-web
     restart: always
     env_file: .env.web
