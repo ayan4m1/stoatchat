@@ -192,7 +192,7 @@ pub fn create_transport(smtp: &ApiSmtp) -> SmtpTransport {
     let relay = if !smtp.helo_host.is_empty() {
         let helo_host = &smtp.helo_host;
 
-        relay.hello_name(helo_host);
+        relay.hello_name(helo_host)
     } else {
         relay
     };
