@@ -1,7 +1,7 @@
 use std::{collections::HashSet, sync::LazyLock};
 
 use lettre::{
-    transport::smtp::{authentication::Credentials, client::Tls},
+    transport::smtp::{authentication::Credentials, client::Tls, extension::ClientId},
     SmtpTransport,
 };
 use regex::Regex;
@@ -190,9 +190,9 @@ pub fn create_transport(smtp: &ApiSmtp) -> SmtpTransport {
     };
 
     let relay = if !smtp.helo_host.is_empty() {
-        let helo_host = &smtp.helo_host.to_string();
+        let helo_host = &smtp.helo_host;
 
-        relay.hello_name(ClientId::Domain(helo_host))
+        relay.hello_name(ClientId::Domain(helo_host.to_string()))
     } else {
         relay
     };
